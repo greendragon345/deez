@@ -36,9 +36,9 @@ public class Utils {
     public ArrayList<Double> calcanglNLT(double dist) {
         ArrayList<Double> d1 = new ArrayList<Double>();
        
-        for (double i = 0.01; i < 89.99; i += 0.01) {
-            double speed = calcvelNLT(Math.sqrt(Constants.maxH * Constants.g * 2 /
-                    Utils.todegsin(89.999) * (Utils.todegsin(89.999) - Constants.g * Constants.K)), i, dist);
+        for (double i = 10; i <50; i += 0.01) {
+            double speed = calcvelNLT(Math.sqrt(Constants.maxH * Constants.g * 2 /(
+            Math.pow(Math.sin(Math.toRadians(89.999)),2) - Constants.maxH*Constants.g * Constants.K*Math.sin(Math.toRadians(89.999)))), Math.toRadians(i), dist);
             switch ((int) speed) {
                 case 0:
 
@@ -55,7 +55,7 @@ public class Utils {
 
     public double calcvelNLT(double maxspeed, double deg, double dist) {
 
-        for (double i = Constants.minspeed; i < maxspeed; i += 0.01) { // kinda think we should change the max min speed
+        for (double i = 2; i < 52; i += 0.01) { // kinda think we should change the max min speed
                                                                        // to just speeds we know the robot can reach.
                                                                        //jhony:the maximmup speed of the falcon is very high 
                                                                        //BTW the fulcon is accelratin isnt it , does he have a maximum speed?
@@ -70,8 +70,9 @@ public class Utils {
     }
 
     public double calcH(double speed, double angle) { // wrote H as a function
-        double H = Math.pow(speed, 2) * Math.pow(todegsin(angle), 2) / Constants.g
-                * (2 + Constants.K * Math.pow(speed, 2) * Math.pow(todegsin(angle), 2));
+        double H = 
+        (Math.pow(speed, 2) * Math.pow(Math.sin(angle), 2)) / ((Constants.g
+                * (2 + ((Constants.K * Math.pow(speed, 2)) * (Math.sin(angle))))));
         return H;
     }
 
@@ -79,12 +80,11 @@ public class Utils {
         double H = calcH(speed, angle);
         double T = 2 * Math.sqrt(2 * H / Constants.g);
         double angl1 = angle / 2 + Math.PI / 4;
-        double Va = speed * toDegCos(angle) / Math.sqrt(1 + Constants.K * Math.pow(speed, 2) *
-                (todegsin(angle) + Math.pow(toDegCos(angle), 2) * Math.log(todegsin(angl1) / toDegCos(angl1))));
+        double Va = speed * Math.cos(angle) / Math.sqrt(1 + Constants.K * Math.pow(speed, 2) *
+                (Math.sin(angle) + Math.pow(Math.cos(angle), 2) * Math.log(Math.sin(angl1) / Math.cos(angl1))));
         double L = Va * T;
-        double Xa = Math.sqrt(L * H * (toDegCos(angle) / toDegCos(angle)));
-        double distan = quadeq(-H, H * L - ((L - 2 * Xa) * Constants.hieght), Constants.hieght * (Math.pow(Xa, 2)));
-        return distan;
+        double Xa = Math.sqrt(L * H * (Math.cos(angle) / Math.sin(angle)));
+        return quadeq(-H, H * L - ((L - 2 * Xa) * Constants.hieght), -1*Constants.hieght * (Math.pow(Xa, 2)));
 
     }
 
@@ -98,6 +98,7 @@ public class Utils {
             // two real and distinct roots
             firstroot = (-b + Math.sqrt(det)) / (2 * a);
             secondroot = (-b - Math.sqrt(det)) / (2 * a);
+           
             return Math.max(firstroot, secondroot);
         } else {
             return 0;
