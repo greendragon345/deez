@@ -35,32 +35,34 @@ public class Utils {
 
     public ArrayList<Double> calcanglNLT(double dist) {
         ArrayList<Double> d1 = new ArrayList<Double>();
-       
-        for (double i = 10; i <50; i += 0.01) {
+        for (double i = 0; i <89; i += 0.1) {
+            double minimumspeed = 2.0;
+
             double speed = calcvelNLT(Math.sqrt(Constants.maxH * Constants.g * 2 /(
-            Math.pow(Math.sin(Math.toRadians(89.999)),2) - Constants.maxH*Constants.g * Constants.K*Math.sin(Math.toRadians(89.999)))), Math.toRadians(i), dist);
-            switch ((int) speed) {
-                case 0:
-
-                    break;
-
-                default:
+            Math.pow(Math.sin(Math.toRadians(89.9)),2) - Constants.maxH*Constants.g * Constants.K*Math.sin(Math.toRadians(89.99)))), Math.toRadians(i), dist,minimumspeed);
+            minimumspeed = speed;
+            while(minimumspeed>0){
                     d1.add(speed);
                     d1.add(i);
-                    break;
+                    speed = calcvelNLT(Math.sqrt(Constants.maxH * Constants.g * 2 /(
+                    Math.pow(Math.sin(Math.toRadians(89.9)),2) - Constants.maxH*Constants.g * Constants.K*Math.sin(Math.toRadians(89.99)))), Math.toRadians(i), dist,minimumspeed+0.1);
+                    minimumspeed = speed;
+                
+
+                
             }
         }
         return d1;
     }
 
-    public double calcvelNLT(double maxspeed, double deg, double dist) {
+    public double calcvelNLT(double maxspeed, double deg, double dist,double minimumspeed) {
 
-        for (double i = 2; i < 52; i += 0.01) { // kinda think we should change the max min speed
+        for (double i = minimumspeed; i < 52; i += 0.1) { // kinda think we should change the max min speed
                                                                        // to just speeds we know the robot can reach.
                                                                        //jhony:the maximmup speed of the falcon is very high 
                                                                        //BTW the fulcon is accelratin isnt it , does he have a maximum speed?
             double distV = calcdist(deg, i);
-            if (Math.abs(distV - dist) <= 0.1 && calcH(i, deg) < Constants.maxH) { // added the H thing to the if
+            if (Math.abs(distV - dist) <= 0.01 && calcH(i, deg) < Constants.maxH) { // added the H thing to the if
                 return i;
             }
 

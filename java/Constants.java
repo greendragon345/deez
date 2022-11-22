@@ -1,8 +1,8 @@
 public final class Constants {
 
     public static final double g=9.81;
-    public static double hieght =4.171;
-    private static final double H = 10;
+    public static double hieght =1.68;
+    private static final double H = 3;
     public static double mass =0.27;
     public static double airdensity = 1.185;
     public static double aerodynmiccoef=0.47;
@@ -14,5 +14,5 @@ public final class Constants {
     public static double hoodratio =0;
     public static double shootratio =0;
     
-    public static final double maxH = 10;
+    public static final double maxH =4;
 }
