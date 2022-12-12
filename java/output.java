@@ -3,16 +3,19 @@ import java.util.ArrayList;
 public class output {
     public static void main(String[] args) {
          Utils u1 = new Utils();
-        ArrayList<Double> posblsoultion = new ArrayList<Double>(u1.calcanglNLT(9));//made the arraylist a singel dimesion one
-        System.out.println(posblsoultion.size());
+        // ArrayList<Double> posblsoultion = new ArrayList<Double>(u1.calcanglNLT(9));//made the arraylist a singel dimesion one
+        // System.out.println(posblsoultion.size());
          
-        for (int j = 0; j < posblsoultion.size(); j+=2) {
-            System.out.println("");
-            Float angle = posblsoultion.get(j+1).floatValue();
-            System.out.print(" shooter angle: "+angle);
-            Float speed = posblsoultion.get(j).floatValue();
-            System.out.print(" ball speed: "+speed);
-            }
+        // for (int j = 0; j < posblsoultion.size(); j+=2) {
+        //     System.out.println("");
+        //     Float angle = posblsoultion.get(j+1).floatValue();
+        //     System.out.print(" shooter angle: "+angle);
+        //     Float speed = posblsoultion.get(j).floatValue();
+        //     System.out.print(" ball speed: "+speed);
+        //     }
+        for (double d1 : u1.get_velocity_and_angle(17, Math.toRadians(45), 8.637)) {
+                System.out.println("sllooge "+d1);
+        }
         // 
         // double movemntrange = 17.669538928;
         // movemntrange = Math.pow(movemntrange,2);
