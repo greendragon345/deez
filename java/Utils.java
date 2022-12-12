@@ -32,6 +32,35 @@ public class Utils {
         return velang;
 
     }
+    public double[] get_velocity_and_angle(double speed,double angle,double distance){
+        double H = calcH(speed, angle);
+        double T = 2 * Math.sqrt(2 * H / Constants.g);
+        double angl1 = angle / 2 + Math.PI / 4;
+        double Va = speed * Math.cos(angle) / Math.sqrt(1 + Constants.K * Math.pow(speed, 2) *
+                (Math.sin(angle) + Math.pow(Math.cos(angle), 2) * Math.log(Math.sin(angl1) / Math.cos(angl1))));
+        double L = Va * T;
+        double Xa = Math.sqrt(L * H * (Math.cos(angle) / Math.sin(angle)));
+        double a1 = L/Xa;
+        double a2 = (L-2*Xa)/H;
+        double a3 = Xa*Math.pow((2-a1),-1);
+        double eqp1 = 1-2*a1+Math.pow(a1,2);
+        double eqp2 = Math.pow((distance/a3),2)-2*(distance/a3)+1;
+        double angletangent = ((eqp1/eqp2)-1)/a2;
+        double angleinrad = Math.atan(angletangent);
+        double speedatpoint = (speed* Math.cos(angle))/(Math.cos(angleinrad)*Math.sqrt(1+(Constants.K*Math.pow(speed,2)*Math.pow(Math.cos(angle),2)*(anglefunction(angle)-anglefunction(angleinrad)))));
+        double[] speedandangle =  {speedatpoint,angleinrad};
+        return speedandangle;
+
+
+
+
+    }
+    public double anglefunction(double angle){
+        double logangle = angle / 2 + Math.PI / 4;
+        double function = (Math.sin(angle)/Math.pow(Math.cos(angle),2))+Math.log(Math.tan(logangle));
+        return function;
+        
+    }
 
     public ArrayList<Double> calcanglNLT(double dist) {
         ArrayList<Double> d1 = new ArrayList<Double>();
