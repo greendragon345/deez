@@ -9,10 +9,10 @@ public final class Constants {
     public static double ballarea = Math.pow((0.24/2),2)*Math.PI;
     public static final double K=airdensity*aerodynmiccoef*ballarea/(2*g*mass);
     // 0.00475626239461;
-    public static final double minspeed = Math.sqrt(H*g*2/
-    Math.sin(Math.toRadians(0.001))*(Math.sin(Math.toRadians(0.001))-g*K));
+    public static final double minspeed = Math.sqrt(1*g*2/
+    Math.sin(Math.toRadians(90))*(Math.sin(Math.toRadians(90))-g*K));
     public static double hoodratio =0;
     public static double shootratio =0;
-    
+    public static double mesurment = 85.9;
     public static final double maxH =4;
 }

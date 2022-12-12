@@ -12,23 +12,31 @@ public class Utils {
     }
 
     public double[] decider(double disitan) {
+        double maxspeed = 70;
+        double speedid =0;
         ArrayList<Double> posblsoultion = new ArrayList<Double>(calcanglNLT(disitan));//made the arraylist a singel dimesion one
 
         int i = 0;
         int maxi = 0;
-        double sum = posblsoultion.get(0)* Constants.shootratio
-                + posblsoultion.get(1) * Constants.hoodratio;
+        // double sum = posblsoultion.get(0)* Constants.shootratio
+        //         + posblsoultion.get(1) * Constants.hoodratio;
         for (int j = 0; j < posblsoultion.size(); j+=2) {
-            System.out.println("shooter speed: "+posblsoultion.get(j));
-            System.out.println("shooter angle: "+posblsoultion.get(j+1));
-        
+            double speedatpoint = get_velocity_and_angle(posblsoultion.get(j),Math.toRadians(posblsoultion.get(j+1)), disitan)[0];
+            double degreeatpoint = get_velocity_and_angle(posblsoultion.get(j), Math.toRadians(posblsoultion.get(j+1)), disitan)[1];
+            double degrindeg = Math.toDegrees(degreeatpoint);
+            // System.out.println("shooter speed: "+posblsoultion.get(j));
+            // System.out.println("shooter angle: "+posblsoultion.get(j+1));
+            if(Math.abs(speedatpoint*Math.sin(degreeatpoint))<Constants.minspeed && Math.abs(speedatpoint* Math.cos(degreeatpoint))<Math.abs(maxspeed)){
+                maxspeed = speedatpoint * Math.cos(degreeatpoint);
+                i = j;
+            }
         // double sum2 =
         // +posblsoultion.get(j)*Constants.shootratio+posblsoultion.get(j+1)*Constants.hoodratio;
         // if(sum>sum2){
         // maxi =i;
         // }
         }
-        double[] velang = { posblsoultion.get(maxi), posblsoultion.get(maxi+1)};
+        double[] velang = { posblsoultion.get(i), posblsoultion.get(i+1)};
         return velang;
 
     }
